@@ -19,7 +19,6 @@
     #container {
       position: relative;
       width: 100vw;
-      max-width: 100%;
       height: auto;
       aspect-ratio: 1280 / 853;
     }
@@ -48,22 +47,20 @@
     .porte3 { top: 54%; left: 60%; width: 10%; height: 19%; }
     .porte4 { top: 57.5%; left: 73.5%; width: 8.5%; height: 16%; }
     .porte5 { top: 60%; left: 84.5%; width: 8%; height: 14%; }
-  </style>
-</head>
-  <img src="https://i.imgur.com/CWgeYOS.png" id="logoBtn" alt="Logo Albatros" style="
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  width: 60px;
-  height: 60px;
-  border-radius: 50%;
-  object-fit: cover;
-  box-shadow: 0 0 10px rgba(255, 255, 255, 0.4);
-  cursor: pointer;
-  z-index: 999;
-">
+    
+    #logoBtn {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      object-fit: cover;
+      box-shadow: 0 0 10px rgba(255, 255, 255, 0.4);
+      cursor: pointer;
+      z-index: 999;
+    }
 
-    /* Fenêtre parchemin */
     #popupOverlay {
       position: fixed;
       top: 0; left: 0;
@@ -125,5 +122,39 @@
     <a href="https://leveildudragon.carrd.co" class="zone porte4"></a>
     <a href="https://leveildudragon.carrd.co" class="zone porte5"></a>
   </div>
+
+  <!-- Logo en bas à droite -->
+  <img src="https://albatroswingchun.github.io/leveildudragon/logo_albatros_cercle.png" id="logoBtn" alt="Logo Albatros">
+
+  <!-- Pop-up style parchemin -->
+  <div id="popupOverlay">
+    <div id="popupContent">
+      <span id="closePopup">&times;</span>
+      <h2>À propos</h2>
+      <p>Ce site est un projet interactif issu de l'univers du Kung-Fu.</p>
+      <p>Créé par <strong>Baptiste</strong> – <em>Albatros Wing Chun</em></p>
+      <a href="https://leveildudragon.carrd.co" target="_blank">Accéder au site principal</a>
+    </div>
+  </div>
+
+  <script>
+    const logoBtn = document.getElementById('logoBtn');
+    const popup = document.getElementById('popupOverlay');
+    const closeBtn = document.getElementById('closePopup');
+
+    logoBtn.addEventListener('click', () => {
+      popup.style.display = 'flex';
+    });
+
+    closeBtn.addEventListener('click', () => {
+      popup.style.display = 'none';
+    });
+
+    popup.addEventListener('click', (e) => {
+      if (e.target === popup) {
+        popup.style.display = 'none';
+      }
+    });
+  </script>
 </body>
 </html>
