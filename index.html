@@ -199,7 +199,10 @@
             }
           }
         });
-
+        
+        bookInitialized = true;
+      }
+    }); // <-- cette accolade + parenthèse fermante manquait ici
 
     closeBtn.addEventListener('click', () => {
       popup.style.display = 'none';
