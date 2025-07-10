@@ -8,35 +8,44 @@
     html, body {
       margin: 0;
       padding: 0;
-      height: 100%;
+      background: #000;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
     }
 
-    body {
-      background: url('https://i.imgur.com/AG68Kpz.png') no-repeat center center fixed;
-      background-size: cover;
+    #container {
       position: relative;
+      width: 1280px;
+      height: 853px;
+      background-image: url('https://i.imgur.com/AG68Kpz.png');
+      background-size: cover;
+      background-position: center;
     }
 
     .zone {
       position: absolute;
       display: block;
-      background-color: rgba(255, 0, 0, 0.3); /* à rendre transparent ensuite */
+      background-color: rgba(255, 0, 0, 0.3); /* debug */
       cursor: pointer;
     }
 
-    /* Positions précises des 5 portes (depuis la capture) */
-    .porte1 { top: 38.5%; left: 10.5%; width: 11%; height: 31%; }
-    .porte2 { top: 39%; left: 30.2%; width: 10.3%; height: 29%; }
-    .porte3 { top: 38%; left: 49.5%; width: 10.5%; height: 30%; }
-    .porte4 { top: 38.5%; left: 68%; width: 9.5%; height: 30%; }
-    .porte5 { top: 39%; left: 85.7%; width: 8%; height: 30%; }
+    /* Zones en pixels */
+    .porte1 { top: 400px; left: 110px; width: 200px; height: 260px; }
+    .porte2 { top: 335px; left: 380px; width: 130px; height: 250px; }
+    .porte3 { top: 320px; left: 635px; width: 135px; height: 255px; }
+    .porte4 { top: 325px; left: 860px; width: 120px; height: 250px; }
+    .porte5 { top: 330px; left: 1060px; width: 105px; height: 250px; }
   </style>
 </head>
 <body>
-  <a href="https://leveildudragon.carrd.co" class="zone porte1"></a>
-  <a href="https://leveildudragon.carrd.co" class="zone porte2"></a>
-  <a href="https://leveildudragon.carrd.co" class="zone porte3"></a>
-  <a href="https://leveildudragon.carrd.co" class="zone porte4"></a>
-  <a href="https://leveildudragon.carrd.co" class="zone porte5"></a>
+  <div id="container">
+    <a href="https://leveildudragon.carrd.co" class="zone porte1"></a>
+    <a href="https://leveildudragon.carrd.co" class="zone porte2"></a>
+    <a href="https://leveildudragon.carrd.co" class="zone porte3"></a>
+    <a href="https://leveildudragon.carrd.co" class="zone porte4"></a>
+    <a href="https://leveildudragon.carrd.co" class="zone porte5"></a>
+  </div>
 </body>
 </html>
