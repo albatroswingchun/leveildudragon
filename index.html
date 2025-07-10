@@ -4,6 +4,16 @@
   <meta charset="UTF-8">
   <title>Leveil du Dragon</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  @keyframes pulse {
+  0% { transform: scale(1); box-shadow: 0 0 10px rgba(255, 255, 255, 0.4); }
+  50% { transform: scale(1.1); box-shadow: 0 0 20px rgba(255, 255, 255, 0.8); }
+  100% { transform: scale(1); box-shadow: 0 0 10px rgba(255, 255, 255, 0.4); }
+}
+
+#logoBtn:hover {
+  animation: pulse 1.2s ease-in-out infinite;
+}
+
   <style>
     html, body {
       margin: 0;
@@ -130,10 +140,7 @@
   <div id="popupOverlay">
     <div id="popupContent">
       <span id="closePopup">&times;</span>
-      <h2>À propos</h2>
-      <p>Ce site est un projet interactif issu de l'univers du Kung-Fu.</p>
-      <p>Créé par <strong>Baptiste</strong> – <em>Albatros Wing Chun</em></p>
-      <a href="https://leveildudragon.carrd.co" target="_blank">Accéder au site principal</a>
+      <img src="https://i.imgur.com/CWgeYOS.png" alt="Popup Image" style="width: 100%; border-radius: 8px;">
     </div>
   </div>
 
