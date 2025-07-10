@@ -9,7 +9,8 @@
       margin: 0;
       padding: 0;
       background: #000;
-      height: 100%;
+      height: 100vh;
+      width: 100vw;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -19,7 +20,6 @@
       position: relative;
       width: 1280px;
       height: 853px;
-      overflow: hidden;
     }
 
     #container img {
@@ -31,13 +31,11 @@
     .zone {
       position: absolute;
       display: block;
-      background-color: rgba(255, 0, 0, 0.3); /* debug */
+      background-color: rgba(255, 0, 0, 0.3); /* temporairement visible */
       cursor: pointer;
     }
 
-    /* Zones en pixels, fixes sur l'image */
+    /* Zones alignées à la main sur ton image */
     .porte1 { top: 330px; left: 120px; width: 135px; height: 260px; }
     .porte2 { top: 335px; left: 380px; width: 130px; height: 250px; }
-    .porte3 { top: 320px; left: 635px; width: 135px; height: 255px; }
-    .porte4 { top: 325px; left: 860px; width: 120px; height: 250px; }
-    .porte5 { top: 330px; left: 1060px; widt
+    .p
