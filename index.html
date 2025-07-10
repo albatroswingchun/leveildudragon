@@ -63,7 +63,6 @@
     .porte5 { top: 60%; left: 84.5%; width: 8%; height: 14%; }
     
     #logoBtn {
-      background-image: url('https://i.imgur.com/yourBackground.png');
       background-size: cover;
       position: fixed;
       bottom: 20px;
@@ -90,18 +89,15 @@
     }
 
     #popupContent {
-      background: url('https://i.imgur.com/d0Ecj9e.png') no-repeat center;
-      background-size: cover;
       width: 80%;
-      max-width: 500px;
-      aspect-ratio: 3/4;
-      padding: 40px 20px;
-      color: #fff8dc;
-      text-align: center;
+      max-width: 600px;
+      height: 80%;
+      background: #000;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
       position: relative;
-      font-family: 'Georgia', serif;
-      box-shadow: 0 0 20px rgba(255, 223, 128, 0.5);
-      border-radius: 12px;
     }
 
      #closePopup {
@@ -115,28 +111,34 @@
     }
 
     .flipbook {
-  width: 100%;
-  height: 100%;
-}
+      width: 500px;
+      height: 600px;
+      overflow: hidden;
+    }
 
-.flipbook .page {
-  width: 100%;
-  height: 100%;
-  background: white;
-  box-shadow: 0 0 5px rgba(0,0,0,0.3);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
+    .flipbook .page {
+      width: 250%;
+      height: 600%;
+      background: #fff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
 
-.flipbook img {
-  max-width: 100%;
-  max-height: 100%;
-  object-fit: contain;
-}
+    .flipbook img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
   </style>
 </head>
 <body>
+
+  <audio id="pageSound" preload="auto">
+    <source src="https://www.soundjay.com/page-turning/page-turning-01.mp3" type="audio/mpeg">
+  </audio>
+
 
   <!-- Image de fond + zones cliquables -->
   <div id="container">
@@ -153,50 +155,57 @@
 
   <!-- Pop-up avec Flipbook -->
   <div id="popupOverlay">
-    <div id="popupContent">
-      <span id="closePopup">&times;</span>
-      <div class="flipbook">
-        <div class="page"><img src="https://i.imgur.com/uGnH5XI.png" alt="Page 1"></div>
-        <div class="page"><img src="https://i.imgur.com/javiPf0.png" alt="Page 2"></div>
-        <div class="page"><img src="https://i.imgur.com/5NDY8VE.png" alt="Page 3"></div>
-        <div class="page"><img src="https://i.imgur.com/exxUNyF.png" alt="Page 4"></div>
-        <div class="page"><img src="https://i.imgur.com/QZZqsrk.png" alt="Page 5"></div>
-        <div class="page"><img src="https://i.imgur.com/6GtLt0X.png" alt="Page 6"></div>
-        <!-- Ajoute autant de pages que tu veux -->
-      </div>
-    </div>
+   <div id="popupContent">
+  <span id="closePopup">&times;</span>
+  <div id="book" class="flipbook">
+    <div class="page"><img src="https://i.imgur.com/uGnH5XI.png" alt="Page 1"></div>
+    <div class="page"><img src="https://i.imgur.com/javiPf0.png" alt="Page 2"></div>
+    <div class="page"><img src="https://i.imgur.com/5NDY8VE.png" alt="Page 3"></div>
+    <div class="page"><img src="https://i.imgur.com/exxUNyF.png" alt="Page 4"></div>
+    <div class="page"><img src="https://i.imgur.com/QZZqsrk.png" alt="Page 5"></div>
+    <div class="page"><img src="https://i.imgur.com/6GtLt0X.png" alt="Page 6"></div>
   </div>
-  
+</div>
+</div>
+
  <!-- Scripts -->
   <script>
-    const logoBtn = document.getElementById('logoBtn');
-    const popup = document.getElementById('popupOverlay');
-    const closeBtn = document.getElementById('closePopup');
+  const logoBtn = document.getElementById('logoBtn');
+  const popup = document.getElementById('popupOverlay');
+  const closeBtn = document.getElementById('closePopup');
 
-    logoBtn.addEventListener('click', () => {
-      popup.style.display = 'flex';
-    });
+  logoBtn.addEventListener('click', () => {
+    popup.style.display = 'flex';
+  });
 
-    closeBtn.addEventListener('click', () => {
+  closeBtn.addEventListener('click', () => {
+    popup.style.display = 'none';
+  });
+
+  popup.addEventListener('click', (e) => {
+    if (e.target === popup) {
       popup.style.display = 'none';
-    });
+    }
+  });
 
-    popup.addEventListener('click', (e) => {
-      if (e.target === popup) {
-        popup.style.display = 'none';
+  $(document).ready(function() {
+    const sound = document.getElementById("pageSound");
+
+    $('#book').turn({
+      width: 500,
+      height: 600,
+      autoCenter: true,
+      elevation: 50,
+      gradients: true,
+      when: {
+        turning: function(event, page, view) {
+          sound.currentTime = 0;
+          sound.play();
+        }
       }
     });
-
-    $(document).ready(function() {
-      $('.flipbook').turn({
-        width: 400,
-        height: 500,
-        autoCenter: true,
-        elevation: 50,
-        gradients: true
-      });
-    });
-  </script>
+  });
+</script>
 
 </body>
 </html>
