@@ -5,10 +5,9 @@
   <title>Leveil du Dragon</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <!-- Turn.js & jQuery -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/turn.js/4.1.0/turn.min.css">
+  <!-- jQuery + Turn.js -->
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/turn.js/4.1.0/turn.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/blasten/turn.js@4/turn.min.js"></script>
 
   <style>
     html, body {
@@ -17,6 +16,10 @@
       background: #000;
       height: 100vh;
       width: 100vw;
+      overflow: hidden;
+    }
+
+    body.modal-open {
       overflow: hidden;
     }
 
@@ -30,7 +33,6 @@
       position: relative;
       width: 100vw;
       height: 100vh;
-      overflow: hidden;
     }
 
     #container img {
@@ -44,10 +46,8 @@
 
     .zone {
       position: absolute;
-      display: block;
       background-color: transparent;
       cursor: pointer;
-      transition: box-shadow 0.3s ease;
       z-index: 1;
     }
 
@@ -61,9 +61,8 @@
     .porte3 { top: 54%; left: 60%; width: 10%; height: 19%; }
     .porte4 { top: 57.5%; left: 73.5%; width: 8.5%; height: 16%; }
     .porte5 { top: 60%; left: 84.5%; width: 8%; height: 14%; }
-    
+
     #logoBtn {
-      background-size: cover;
       position: fixed;
       bottom: 20px;
       right: 20px;
@@ -79,9 +78,11 @@
 
     #popupOverlay {
       position: fixed;
-      top: 0; left: 0;
-      width: 100vw; height: 100vh;
-      background: rgba(0, 0, 0, 0.6);
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(0, 0, 0, 0.8);
       display: none;
       justify-content: center;
       align-items: center;
@@ -89,58 +90,51 @@
     }
 
     #popupContent {
-      width: 80%;
-      max-width: 600px;
-      height: 80%;
-      background: #000;
-      padding: 0;
+      width: 400px;
+      height: 600px;
+      background: none;
       display: flex;
       justify-content: center;
       align-items: center;
       position: relative;
     }
 
-     #closePopup {
+    #closePopup {
       position: absolute;
       top: 10px;
       right: 15px;
       cursor: pointer;
       font-size: 24px;
-      color: #000;
+      color: #fff;
       z-index: 1000;
     }
 
     .flipbook {
-      width: 500px;
-      height: 600px;
-      overflow: hidden;
+      width: 100%;
+      height: 100%;
     }
 
     .flipbook .page {
-      width: 250%;
-      height: 600%;
       background: #fff;
-      display: flex;
-      justify-content: center;
-      align-items: center;
+      width: 100%;
+      height: 100%;
     }
 
     .flipbook img {
       width: 100%;
       height: 100%;
-      object-fit: cover;
+      object-fit: contain;
     }
-
   </style>
 </head>
 <body>
 
+  <!-- Son -->
   <audio id="pageSound" preload="auto">
-    <source src="https://www.soundjay.com/page-turning/page-turning-01.mp3" type="audio/mpeg">
+    <source src="https://i.imgur.com/0twrdNc.mp4" type="audio/mpeg">
   </audio>
 
-
-  <!-- Image de fond + zones cliquables -->
+  <!-- Fond + zones -->
   <div id="container">
     <img src="https://i.imgur.com/AG68Kpz.png" alt="Portes du Dragon">
     <a href="https://leveildudragon.carrd.co" class="zone porte1"></a>
@@ -153,59 +147,65 @@
   <!-- Logo animé -->
   <img src="https://i.imgur.com/uGnH5XI.png" id="logoBtn" alt="Logo Albatros">
 
-  <!-- Pop-up avec Flipbook -->
+  <!-- Popup -->
   <div id="popupOverlay">
-   <div id="popupContent">
-  <span id="closePopup">&times;</span>
-  <div id="book" class="flipbook">
-    <div class="page"><img src="https://i.imgur.com/uGnH5XI.png" alt="Page 1"></div>
-    <div class="page"><img src="https://i.imgur.com/javiPf0.png" alt="Page 2"></div>
-    <div class="page"><img src="https://i.imgur.com/5NDY8VE.png" alt="Page 3"></div>
-    <div class="page"><img src="https://i.imgur.com/exxUNyF.png" alt="Page 4"></div>
-    <div class="page"><img src="https://i.imgur.com/QZZqsrk.png" alt="Page 5"></div>
-    <div class="page"><img src="https://i.imgur.com/6GtLt0X.png" alt="Page 6"></div>
+    <div id="popupContent">
+      <span id="closePopup">&times;</span>
+      <div class="flipbook" id="book">
+        <div class="page"><img src="https://i.imgur.com/uGnH5XI.png" alt="Page 1"></div>
+        <div class="page"><img src="https://i.imgur.com/javiPf0.png" alt="Page 2"></div>
+        <div class="page"><img src="https://i.imgur.com/5NDY8VE.png" alt="Page 3"></div>
+        <div class="page"><img src="https://i.imgur.com/exxUNyF.png" alt="Page 4"></div>
+        <div class="page"><img src="https://i.imgur.com/QZZqsrk.png" alt="Page 5"></div>
+        <div class="page"><img src="https://i.imgur.com/6GtLt0X.png" alt="Page 6"></div>
+      </div>
+    </div>
   </div>
-</div>
-</div>
 
- <!-- Scripts -->
+  <!-- JS -->
   <script>
-  const logoBtn = document.getElementById('logoBtn');
-  const popup = document.getElementById('popupOverlay');
-  const closeBtn = document.getElementById('closePopup');
+    const logoBtn = document.getElementById('logoBtn');
+    const popup = document.getElementById('popupOverlay');
+    const closeBtn = document.getElementById('closePopup');
+    const sound = document.getElementById('pageSound');
 
-  logoBtn.addEventListener('click', () => {
-    popup.style.display = 'flex';
-  });
+    let bookInitialized = false;
 
-  closeBtn.addEventListener('click', () => {
-    popup.style.display = 'none';
-  });
+    logoBtn.addEventListener('click', () => {
+      popup.style.display = 'flex';
+      document.body.classList.add('modal-open');
 
-  popup.addEventListener('click', (e) => {
-    if (e.target === popup) {
-      popup.style.display = 'none';
-    }
-  });
-
-  $(document).ready(function() {
-    const sound = document.getElementById("pageSound");
-
-    $('#book').turn({
-      width: 500,
-      height: 600,
-      autoCenter: true,
-      elevation: 50,
-      gradients: true,
-      when: {
-        turning: function(event, page, view) {
-          sound.currentTime = 0;
-          sound.play();
-        }
+      if (!bookInitialized) {
+        $('#book').turn({
+          width: 400,
+          height: 600,
+          autoCenter: true,
+          display: 'single',
+          elevation: 50,
+          gradients: true,
+          when: {
+            turning: function () {
+              sound.currentTime = 0;
+              sound.play();
+            }
+          }
+        });
+        bookInitialized = true;
       }
     });
-  });
-</script>
+
+    closeBtn.addEventListener('click', () => {
+      popup.style.display = 'none';
+      document.body.classList.remove('modal-open');
+    });
+
+    popup.addEventListener('click', (e) => {
+      if (e.target === popup) {
+        popup.style.display = 'none';
+        document.body.classList.remove('modal-open');
+      }
+    });
+  </script>
 
 </body>
 </html>
