@@ -35,9 +35,14 @@
       display: block;
       background-color: transparent;
       cursor: pointer;
+      transition: box-shadow 0.3s ease;
     }
 
-    /* Zones positionnées en POURCENTAGE pour suivre l’image */
+    .zone:hover {
+      box-shadow: 0 0 20px 10px rgba(255, 255, 0, 0.4);
+      border-radius: 8px;
+    }
+
     .porte1 { top: 40%; left: 9%; width: 20%; height: 33%; }
     .porte2 { top: 48%; left: 41%; width: 13.5%; height: 25%; }
     .porte3 { top: 54%; left: 60%; width: 10%; height: 19%; }
