@@ -1,9 +1,15 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8">
   <title>Leveil du Dragon</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Turn.js & jQuery -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/turn.js/4.1.0/turn.min.css">
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/turn.js/4.1.0/turn.min.js"></script>
+
   <style>
     html, body {
       margin: 0;
@@ -15,9 +21,9 @@
     }
 
     @keyframes pulse {
-      0% { transform: scale(1); box-shadow: 0 0 10px rgba(255, 255, 255, 0.4); }
-      50% { transform: scale(1.1); box-shadow: 0 0 20px rgba(255, 255, 255, 0.8); }
-      100% { transform: scale(1); box-shadow: 0 0 10px rgba(255, 255, 255, 0.4); }
+      0% { transform: scale(1); box-shadow: 0 0 10px rgba(255,255,255,0.4); }
+      50% { transform: scale(1.1); box-shadow: 0 0 20px rgba(255,255,255,0.8); }
+      100% { transform: scale(1); box-shadow: 0 0 10px rgba(255,255,255,0.4); }
     }
 
     #container {
@@ -96,38 +102,38 @@
       border-radius: 12px;
     }
 
-    #closePopup {
+     #closePopup {
       position: absolute;
       top: 10px;
       right: 15px;
       cursor: pointer;
       font-size: 24px;
-      color: #ffe066;
+      color: #000;
+      z-index: 1000;
     }
 
-    #closePopup:hover {
-      color: red;
-    }
-
-    /* Flipbook container – à personnaliser */
     .flipbook {
       width: 100%;
       height: 100%;
     }
 
+    .flipbook .page {
+      background: white;
+      box-shadow: 0 0 5px rgba(0,0,0,0.3);
+    }
+
     .flipbook img {
       width: 100%;
       height: auto;
-      margin-bottom: 10px;
-      border-radius: 4px;
+      display: block;
     }
   </style>
 </head>
 <body>
 
-  <!-- Image fond + zones -->
+  <!-- Image de fond + zones cliquables -->
   <div id="container">
-    <img src="https://i.imgur.com/AG68Kpz.png" alt="Portes du Dragon" />
+    <img src="https://i.imgur.com/AG68Kpz.png" alt="Portes du Dragon">
     <a href="https://leveildudragon.carrd.co" class="zone porte1"></a>
     <a href="https://leveildudragon.carrd.co" class="zone porte2"></a>
     <a href="https://leveildudragon.carrd.co" class="zone porte3"></a>
@@ -136,24 +142,22 @@
   </div>
 
   <!-- Logo animé -->
-  <img src="https://albatroswingchun.github.io/leveildudragon/logo_albatros_cercle.png" id="logoBtn" alt="Logo Albatros" />
+  <img src="https://albatroswingchun.github.io/leveildudragon/logo_albatros_cercle.png" id="logoBtn" alt="Logo Albatros">
 
-  <!-- Popup avec flipbook -->
+  <!-- Pop-up avec Flipbook -->
   <div id="popupOverlay">
     <div id="popupContent">
       <span id="closePopup">&times;</span>
-
       <div class="flipbook">
-        <img src="https://i.imgur.com/IMAGE1.png" alt="Page 1">
-        <img src="https://i.imgur.com/IMAGE2.png" alt="Page 2">
-        <img src="https://i.imgur.com/IMAGE3.png" alt="Page 3">
-        <!-- Ajoute autant de pages que nécessaire -->
+        <div class="page"><img src="https://i.imgur.com/IMAGE1.png" alt="Page 1"></div>
+        <div class="page"><img src="https://i.imgur.com/IMAGE2.png" alt="Page 2"></div>
+        <div class="page"><img src="https://i.imgur.com/IMAGE3.png" alt="Page 3"></div>
+        <!-- Ajoute autant de pages que tu veux -->
       </div>
-
     </div>
   </div>
-
-  <!-- Script -->
+  
+ <!-- Scripts -->
   <script>
     const logoBtn = document.getElementById('logoBtn');
     const popup = document.getElementById('popupOverlay');
@@ -172,6 +176,15 @@
         popup.style.display = 'none';
       }
     });
+
+    $(document).ready(function() {
+      $('.flipbook').turn({
+        width: 400,
+        height: 500,
+        autoCenter: true
+      });
+    });
   </script>
+
 </body>
 </html>
