@@ -114,6 +114,7 @@
       height: 600px;
       margin: 0 auto;
       visibility: hidden; /* caché avant init */
+      overflow: visible; /* <-- AJOUT ÉLÉMENT CLEF */
     }
 
     .flipbook .page {
@@ -190,18 +191,15 @@
           gradients: true,
           when: {
             turning: function () {
-              sound.currentTime = 0;
+             sound.currentTime = 0;
               sound.play();
+            },
+            turned: function () {
+              document.getElementById('book').style.visibility = 'visible'; // <-- mets-le ici
             }
           }
         });
 
-         // ➕ Montre le flipbook après initialisation
-         document.getElementById('book').style.visibility = 'visible';
-        
-        bookInitialized = true;
-      }
-    });
 
     closeBtn.addEventListener('click', () => {
       popup.style.display = 'none';
