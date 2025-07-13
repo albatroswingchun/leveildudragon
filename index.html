@@ -116,13 +116,20 @@
       position: absolute;
       top: 50%;
       transform: translateY(-50%);
-      font-size: 40px;
+      font-size: 24px;
       color: white;
-      background: rgba(0,0,0,0.3);
-      padding: 10px 15px;
+      background: rgba(0, 0, 0, 0.6);
+      padding: 15px;
+      border-radius: 50%;
       cursor: pointer;
       z-index: 1000;
       user-select: none;
+      transition: background 0.3s ease, transform 0.2s ease;
+    }
+
+    .arrow:hover {
+      background: rgba(255, 255, 255, 0.2);
+      transform: translateY(-50%) scale(1.1);
     }
 
     .arrow.left { left: 10px; }
@@ -153,66 +160,65 @@
   </div>
 
   <script>
-  const logoBtn = document.getElementById('logoBtn');
-  const popup = document.getElementById('popupOverlay');
-  const closeBtn = document.getElementById('closePopup');
-  const popupImage = document.getElementById('popupImage');
-  const nextBtn = document.getElementById('nextBtn');
-  const prevBtn = document.getElementById('prevBtn');
+    const logoBtn = document.getElementById('logoBtn');
+    const popup = document.getElementById('popupOverlay');
+    const closeBtn = document.getElementById('closePopup');
+    const popupImage = document.getElementById('popupImage');
+    const nextBtn = document.getElementById('nextBtn');
+    const prevBtn = document.getElementById('prevBtn');
 
-  const imageList = [
-    "https://i.imgur.com/uGnH5XI.png",
-    "https://i.imgur.com/javiPf0.png",
-    "https://i.imgur.com/5NDY8VE.png",
-    "https://i.imgur.com/exxUNyF.png",
-    "https://i.imgur.com/QZZqsrk.png",
-    "https://i.imgur.com/6GtLt0X.png"
-  ];
+    const imageList = [
+      "https://i.imgur.com/uGnH5XI.png",
+      "https://i.imgur.com/javiPf0.png",
+      "https://i.imgur.com/5NDY8VE.png",
+      "https://i.imgur.com/exxUNyF.png",
+      "https://i.imgur.com/QZZqsrk.png",
+      "https://i.imgur.com/6GtLt0X.png"
+    ];
 
-  let currentIndex = 0;
+    let currentIndex = 0;
 
-  function updateImage() {
-    popupImage.src = imageList[currentIndex];
-    // Masquer les flèches selon la position
-    prevBtn.style.display = currentIndex === 0 ? 'none' : 'block';
-    nextBtn.style.display = currentIndex === imageList.length - 1 ? 'none' : 'block';
-  }
+    function updateImage() {
+      popupImage.src = imageList[currentIndex];
+      prevBtn.style.display = currentIndex === 0 ? 'none' : 'block';
+      nextBtn.style.display = currentIndex === imageList.length - 1 ? 'none' : 'block';
+    }
 
-  logoBtn.addEventListener('click', () => {
-    popup.style.display = 'flex';
-    document.body.classList.add('modal-open');
-    currentIndex = 0;
-    updateImage();
-  });
+    logoBtn.addEventListener('click', () => {
+      popup.style.display = 'flex';
+      document.body.classList.add('modal-open');
+      currentIndex = 0;
+      updateImage();
+    });
 
-  closeBtn.addEventListener('click', () => {
-    popup.style.display = 'none';
-    document.body.classList.remove('modal-open');
-  });
-
-  popup.addEventListener('click', (e) => {
-    if (e.target === popup) {
+    closeBtn.addEventListener('click', () => {
       popup.style.display = 'none';
       document.body.classList.remove('modal-open');
-    }
-  });
+    });
 
-  nextBtn.addEventListener('click', (e) => {
-    e.stopPropagation();
-    if (currentIndex < imageList.length - 1) {
-      currentIndex++;
-      updateImage();
-    }
-  });
+    popup.addEventListener('click', (e) => {
+      if (e.target === popup) {
+        popup.style.display = 'none';
+        document.body.classList.remove('modal-open');
+      }
+    });
 
-  prevBtn.addEventListener('click', (e) => {
-    e.stopPropagation();
-    if (currentIndex > 0) {
-      currentIndex--;
-      updateImage();
-    }
-  });
-</script>
+    nextBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      if (currentIndex < imageList.length - 1) {
+        currentIndex++;
+        updateImage();
+      }
+    });
+
+    prevBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      if (currentIndex > 0) {
+        currentIndex--;
+        updateImage();
+      }
+    });
+  </script>
 
 </body>
 </html>
