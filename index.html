@@ -280,24 +280,24 @@
     });
 
     window.addEventListener('load', () => {
-    const container = document.getElementById('container');
-    const image = document.querySelector('.imageWrapper img');
-    const target = document.getElementById('scrollTarget');
+      const container = document.getElementById('container');
+      const target = document.getElementById('scrollTarget');
+      const image = document.querySelector('.imageWrapper img');
 
-    function centerOnTarget() {
-      if (target && container) {
-        const rect = target.getBoundingClientRect();
-        const scrollTop = rect.top + container.scrollTop - container.offsetTop - container.clientHeight / 2;
-        container.scrollTop = scrollTop;
+      function centerOnTarget() {
+        setTimeout(() => {
+          if (target && container) {
+            target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          }
+        }, 100); // délai léger pour laisser le navigateur finir le rendu
       }
-    }
 
-    if (image.complete) {
-      centerOnTarget();
-    } else {
-      image.addEventListener('load', centerOnTarget);
-    }
-  });
+      if (image.complete) {
+        centerOnTarget();
+      } else {
+        image.addEventListener('load', centerOnTarget);
+      }
+    });
 </script>
 </body>
 </html>
