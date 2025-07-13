@@ -285,22 +285,28 @@
       boundsPadding: 0.2
     });
 
-    // 🔧 Scroll automatique vers les portes
-    window.addEventListener('load', () => {
-      const container = document.getElementById('container');
-      const image = document.getElementById('mainImage');
-
-      function scrollToTarget() {
-        if (image.offsetHeight > 0 && container.scrollHeight > container.clientHeight) {
-          const targetY = image.offsetHeight * 0.63;
-          container.scrollTop = targetY - container.clientHeight / 2;
-        } else {
-          requestAnimationFrame(scrollToTarget);
+    <script>
+      window.addEventListener('load', () => {
+        const container = document.getElementById('container');
+        const image = document.getElementById('mainImage');
+    
+        function scrollToImagePercent(percent) {
+          const imageHeight = image.offsetHeight;
+          const scrollY = imageHeight * percent - container.clientHeight / 2;
+          container.scrollTo({ top: scrollY, behavior: 'smooth' });
         }
-      }
 
-      scrollToTarget();
-    });
-  </script>
+        function waitUntilImageLoaded() {
+          const interval = setInterval(() => {
+            if (image.complete && image.offsetHeight > 0) {
+              clearInterval(interval);
+              scrollToImagePercent(0.63); // 63% comme demandé
+            }
+          }, 50);
+        }
+
+        waitUntilImageLoaded();
+      });
+    </script>
 </body>
 </html>
