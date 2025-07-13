@@ -5,9 +5,6 @@
   <title>Leveil du Dragon</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <!-- jQuery (obligatoire uniquement si tu ajoutes d'autres effets) -->
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
   <style>
     html, body {
       margin: 0;
@@ -114,40 +111,75 @@
       color: #fff;
       z-index: 1000;
     }
+
+    .arrow {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 40px;
+      color: white;
+      background: rgba(0,0,0,0.3);
+      padding: 10px 15px;
+      cursor: pointer;
+      z-index: 1000;
+      user-select: none;
+    }
+
+    .arrow.left { left: 10px; }
+    .arrow.right { right: 10px; }
+
   </style>
 </head>
 <body>
 
-  <!-- Fond + zones -->
   <div id="container">
     <img src="https://i.imgur.com/AG68Kpz.png" alt="Portes du Dragon">
-    <a href="https://leveildudragon.carrd.co" class="zone porte1"></a>
-    <a href="https://leveildudragon.carrd.co" class="zone porte2"></a>
-    <a href="https://leveildudragon.carrd.co" class="zone porte3"></a>
-    <a href="https://leveildudragon.carrd.co" class="zone porte4"></a>
-    <a href="https://leveildudragon.carrd.co" class="zone porte5"></a>
+    <a href="#" class="zone porte1"></a>
+    <a href="#" class="zone porte2"></a>
+    <a href="#" class="zone porte3"></a>
+    <a href="#" class="zone porte4"></a>
+    <a href="#" class="zone porte5"></a>
   </div>
 
-  <!-- Logo animé -->
   <img src="https://i.imgur.com/uGnH5XI.png" id="logoBtn" alt="Logo Albatros">
 
-  <!-- Popup -->
   <div id="popupOverlay">
     <div id="popupContent">
       <span id="closePopup">&times;</span>
-      <img id="popupImage" src="https://i.imgur.com/javiPf0.png" alt="Image popup">
+      <div class="arrow left" id="prevBtn">&#8592;</div>
+      <img id="popupImage" src="" alt="Image popup">
+      <div class="arrow right" id="nextBtn">&#8594;</div>
     </div>
   </div>
 
-  <!-- JS -->
   <script>
     const logoBtn = document.getElementById('logoBtn');
     const popup = document.getElementById('popupOverlay');
     const closeBtn = document.getElementById('closePopup');
+    const popupImage = document.getElementById('popupImage');
+    const nextBtn = document.getElementById('nextBtn');
+    const prevBtn = document.getElementById('prevBtn');
+
+    const imageList = [
+      "https://i.imgur.com/uGnH5XI.png",
+      "https://i.imgur.com/javiPf0.png",
+      "https://i.imgur.com/5NDY8VE.png",
+      "https://i.imgur.com/exxUNyF.png",
+      "https://i.imgur.com/QZZqsrk.png",
+      "https://i.imgur.com/6GtLt0X.png"
+    ];
+
+    let currentIndex = 0;
+
+    function updateImage() {
+      popupImage.src = imageList[currentIndex];
+    }
 
     logoBtn.addEventListener('click', () => {
       popup.style.display = 'flex';
       document.body.classList.add('modal-open');
+      currentIndex = 0;
+      updateImage();
     });
 
     closeBtn.addEventListener('click', () => {
@@ -160,6 +192,18 @@
         popup.style.display = 'none';
         document.body.classList.remove('modal-open');
       }
+    });
+
+    nextBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      currentIndex = (currentIndex + 1) % imageList.length;
+      updateImage();
+    });
+
+    prevBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      currentIndex = (currentIndex - 1 + imageList.length) % imageList.length;
+      updateImage();
     });
   </script>
 
