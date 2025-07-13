@@ -279,25 +279,32 @@
     });
 
     window.addEventListener('load', () => {
-      const container = document.getElementById('container');
-      const image = document.getElementById('mainImage');
+    const container = document.getElementById('container');
+    const image = document.getElementById('mainImage');
 
-      function centerOnScrollTarget() {
-        const imageHeight = image.offsetHeight;
-        const containerHeight = container.clientHeight;
-        const targetY = imageHeight * 0.63; // 63% de la hauteur de l’image
-        const scrollTop = targetY - containerHeight / 2;
-        container.scrollTop = scrollTop;
+    function centerOnScrollTargetWhenReady() {
+      const maxTries = 20;
+      let tries = 0;
+
+      function attemptScroll() {
+        if (image.offsetHeight > 0) {
+          const targetY = image.offsetHeight * 0.63;
+          container.scrollTop = targetY - container.clientHeight / 2;
+        } else if (tries < maxTries) {
+          tries++;
+          setTimeout(attemptScroll, 100);
+        }
       }
 
-      if (image.complete) {
-        setTimeout(centerOnScrollTarget, 100);
-      } else {
-        image.addEventListener('load', () => {
-          setTimeout(centerOnScrollTarget, 100);
-        });
-      }
-    });
-  </script>
+      attemptScroll();
+    }
+
+    if (image.complete) {
+      centerOnScrollTargetWhenReady();
+    } else {
+      image.addEventListener('load', centerOnScrollTargetWhenReady);
+    }
+  });
+</script>
 </body>
 </html>
