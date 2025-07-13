@@ -288,20 +288,29 @@
       window.addEventListener('load', () => {
         const container = document.getElementById('container');
         const image = document.getElementById('mainImage');
-    
+
         function scrollToImagePercent(percent) {
           const imageHeight = image.offsetHeight;
           const scrollY = imageHeight * percent - container.clientHeight / 2;
           container.scrollTo({ top: scrollY, behavior: 'smooth' });
         }
 
-        if (image.complete && image.offsetHeight > 0) {
-          scrollToImagePercent(0.63);
-        } else {
-          image.addEventListener('load', () => {
-            scrollToImagePercent(0.63);
-          });
+        function waitUntilImageLoaded(callback, maxTries = 20) {
+          let tries = 0;
+          function tryScroll() {
+            if (image.complete && image.offsetHeight > 0) {
+              callback();
+            } else if (tries < maxTries) {
+              tries++;
+              setTimeout(tryScroll, 100);
+            }
+          }
+          tryScroll();
         }
+
+        waitUntilImageLoaded(() => {
+          scrollToImagePercent(0.63);
+        });
       });
     </script>
 </body>
