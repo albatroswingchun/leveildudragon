@@ -286,27 +286,26 @@
     });
 
     // === Scroll automatique sur 63 % au chargement ===
-    window.addEventListener('load', () => {
+    window.addEventListener('DOMContentLoaded', () => {
       const container = document.getElementById('container');
       const image = document.getElementById('mainImage');
 
-      function scrollToImagePercent(percent) {
-        const imageHeight = image.offsetHeight;
-        const scrollY = imageHeight * percent - container.clientHeight / 2;
-        container.scrollTop = scrollY;
-      }
-
-      function waitUntilReady(callback, tries = 0) {
-        if (image.complete && image.offsetHeight > 0) {
-          callback();
-        } else if (tries < 30) {
-          setTimeout(() => waitUntilReady(callback, tries + 1), 100);
+      const tryScroll = (maxAttempts = 30, attempt = 0) => {
+        if (image && container && image.naturalHeight > 0) {
+          const imageHeight = image.naturalHeight * (image.clientWidth / image.naturalWidth);
+          const scrollY = imageHeight * 0.63 - container.clientHeight / 2;
+          container.scrollTop = scrollY;
+        } else if (attempt < maxAttempts) {
+          setTimeout(() => tryScroll(maxAttempts, attempt + 1), 100);
         }
-      }
+      };
 
-      waitUntilReady(() => {
-        scrollToImagePercent(0.63);
-      });
+      // Si image déjà chargée (via cache), sinon attendre
+      if (image.complete) {
+        tryScroll();
+      } else {
+        image.addEventListener('load', () => tryScroll());
+      }
     });
   </script>
 </body>
