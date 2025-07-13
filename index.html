@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <title>Leveil du Dragon</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, maximum-scale=5.0">
 
   <style>
     html, body {
@@ -12,7 +12,13 @@
       background: #000;
       height: 100vh;
       width: 100vw;
-      overflow: hidden;
+    }
+
+    @media (max-width: 768px) {
+      html, body {
+        overflow: auto;
+        touch-action: auto;
+      }
     }
 
     body.modal-open {
