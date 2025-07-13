@@ -284,34 +284,30 @@
       bounds: true,
       boundsPadding: 0.2
     });
-    
-      window.addEventListener('load', () => {
-        const container = document.getElementById('container');
-        const image = document.getElementById('mainImage');
 
-        function scrollToImagePercent(percent) {
-          const imageHeight = image.offsetHeight;
-          const scrollY = imageHeight * percent - container.clientHeight / 2;
-          container.scrollTop = scrolly;
+    // === Scroll automatique sur 63 % au chargement ===
+    window.addEventListener('load', () => {
+      const container = document.getElementById('container');
+      const image = document.getElementById('mainImage');
+
+      function scrollToImagePercent(percent) {
+        const imageHeight = image.offsetHeight;
+        const scrollY = imageHeight * percent - container.clientHeight / 2;
+        container.scrollTop = scrollY;
+      }
+
+      function waitUntilReady(callback, tries = 0) {
+        if (image.complete && image.offsetHeight > 0) {
+          callback();
+        } else if (tries < 30) {
+          setTimeout(() => waitUntilReady(callback, tries + 1), 100);
         }
+      }
 
-        function waitUntilImageLoaded(callback, maxTries = 20) {
-          let tries = 0;
-          function tryScroll() {
-            if (image.complete && image.offsetHeight > 0) {
-              callback();
-            } else if (tries < maxTries) {
-              tries++;
-              setTimeout(tryScroll, 100);
-            }
-          }
-          tryScroll();
-        }
-
-        waitUntilImageLoaded(() => {
-          scrollToImagePercent(0.63);
-        });
+      waitUntilReady(() => {
+        scrollToImagePercent(0.63);
       });
-    </script>
+    });
+  </script>
 </body>
 </html>
