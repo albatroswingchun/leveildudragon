@@ -153,59 +153,66 @@
   </div>
 
   <script>
-    const logoBtn = document.getElementById('logoBtn');
-    const popup = document.getElementById('popupOverlay');
-    const closeBtn = document.getElementById('closePopup');
-    const popupImage = document.getElementById('popupImage');
-    const nextBtn = document.getElementById('nextBtn');
-    const prevBtn = document.getElementById('prevBtn');
+  const logoBtn = document.getElementById('logoBtn');
+  const popup = document.getElementById('popupOverlay');
+  const closeBtn = document.getElementById('closePopup');
+  const popupImage = document.getElementById('popupImage');
+  const nextBtn = document.getElementById('nextBtn');
+  const prevBtn = document.getElementById('prevBtn');
 
-    const imageList = [
-      "https://i.imgur.com/uGnH5XI.png",
-      "https://i.imgur.com/javiPf0.png",
-      "https://i.imgur.com/5NDY8VE.png",
-      "https://i.imgur.com/exxUNyF.png",
-      "https://i.imgur.com/QZZqsrk.png",
-      "https://i.imgur.com/6GtLt0X.png"
-    ];
+  const imageList = [
+    "https://i.imgur.com/uGnH5XI.png",
+    "https://i.imgur.com/javiPf0.png",
+    "https://i.imgur.com/5NDY8VE.png",
+    "https://i.imgur.com/exxUNyF.png",
+    "https://i.imgur.com/QZZqsrk.png",
+    "https://i.imgur.com/6GtLt0X.png"
+  ];
 
-    let currentIndex = 0;
+  let currentIndex = 0;
 
-    function updateImage() {
-      popupImage.src = imageList[currentIndex];
-    }
+  function updateImage() {
+    popupImage.src = imageList[currentIndex];
+    // Masquer les flèches selon la position
+    prevBtn.style.display = currentIndex === 0 ? 'none' : 'block';
+    nextBtn.style.display = currentIndex === imageList.length - 1 ? 'none' : 'block';
+  }
 
-    logoBtn.addEventListener('click', () => {
-      popup.style.display = 'flex';
-      document.body.classList.add('modal-open');
-      currentIndex = 0;
-      updateImage();
-    });
+  logoBtn.addEventListener('click', () => {
+    popup.style.display = 'flex';
+    document.body.classList.add('modal-open');
+    currentIndex = 0;
+    updateImage();
+  });
 
-    closeBtn.addEventListener('click', () => {
+  closeBtn.addEventListener('click', () => {
+    popup.style.display = 'none';
+    document.body.classList.remove('modal-open');
+  });
+
+  popup.addEventListener('click', (e) => {
+    if (e.target === popup) {
       popup.style.display = 'none';
       document.body.classList.remove('modal-open');
-    });
+    }
+  });
 
-    popup.addEventListener('click', (e) => {
-      if (e.target === popup) {
-        popup.style.display = 'none';
-        document.body.classList.remove('modal-open');
-      }
-    });
-
-    nextBtn.addEventListener('click', (e) => {
-      e.stopPropagation();
-      currentIndex = (currentIndex + 1) % imageList.length;
+  nextBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    if (currentIndex < imageList.length - 1) {
+      currentIndex++;
       updateImage();
-    });
+    }
+  });
 
-    prevBtn.addEventListener('click', (e) => {
-      e.stopPropagation();
-      currentIndex = (currentIndex - 1 + imageList.length) % imageList.length;
+  prevBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    if (currentIndex > 0) {
+      currentIndex--;
       updateImage();
-    });
-  </script>
+    }
+  });
+</script>
 
 </body>
 </html>
