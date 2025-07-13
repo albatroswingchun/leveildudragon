@@ -284,8 +284,7 @@
       bounds: true,
       boundsPadding: 0.2
     });
-
-    <script>
+    
       window.addEventListener('load', () => {
         const container = document.getElementById('container');
         const image = document.getElementById('mainImage');
@@ -296,16 +295,13 @@
           container.scrollTo({ top: scrollY, behavior: 'smooth' });
         }
 
-        function waitUntilImageLoaded() {
-          const interval = setInterval(() => {
-            if (image.complete && image.offsetHeight > 0) {
-              clearInterval(interval);
-              scrollToImagePercent(0.63); // 63% comme demandé
-            }
-          }, 50);
+        if (image.complete && image.offsetHeight > 0) {
+          scrollToImagePercent(0.63);
+        } else {
+          image.addEventListener('load', () => {
+            scrollToImagePercent(0.63);
+          });
         }
-
-        waitUntilImageLoaded();
       });
     </script>
 </body>
