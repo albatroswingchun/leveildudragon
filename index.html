@@ -269,20 +269,23 @@
       });
     }
 
-    // Init les deux galeries
+    // === Première galerie : logo principal
     initPopup("logoBtn", "popup1", [
       "https://i.imgur.com/uGnH5XI.png",
       "https://i.imgur.com/javiPf0.png",
       "https://i.imgur.com/5NDY8VE.png"
     ]);
 
+    // === Deuxième galerie : second bouton (règles, etc.)
     initPopup("secondBtn", "popup2", [
-      "https://i.imgur.com/NHoPZhV.png",
-      "https://i.imgur.com/exxUNyF.png",
-      "https://i.imgur.com/6GtLt0X.png"
+      "https://i.imgur.com/ayNer7u.png",
+      "https://i.imgur.com/aLNoNg3.png",
+      "https://i.imgur.com/br5f9WL.png",
+      "https://i.imgur.com/78d9HDe.png",
+      "https://i.imgur.com/ZVGY4HX.png"
     ]);
 
-    // Scroll auto au chargement
+    // === Scroll auto sur 63% au chargement ===
     window.addEventListener('DOMContentLoaded', () => {
       const container = document.getElementById('container');
       const image = document.getElementById('mainImage');
