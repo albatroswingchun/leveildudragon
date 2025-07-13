@@ -5,9 +5,8 @@
   <title>Leveil du Dragon</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <!-- jQuery + Turn.js -->
+  <!-- jQuery (obligatoire uniquement si tu ajoutes d'autres effets) -->
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/gh/blasten/turn.js@4/turn.min.js"></script>
 
   <style>
     html, body {
@@ -90,13 +89,20 @@
     }
 
     #popupContent {
-      width: 400px;
-      height: 600px;
+      width: 90%;
+      max-width: 500px;
       background: none;
       display: flex;
       justify-content: center;
       align-items: center;
       position: relative;
+    }
+
+    #popupImage {
+      max-width: 100%;
+      max-height: 90vh;
+      border-radius: 12px;
+      box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
     }
 
     #closePopup {
@@ -108,34 +114,9 @@
       color: #fff;
       z-index: 1000;
     }
-
-    .flipbook {
-      width: 400px;
-      height: 600px;
-      margin: 0 auto;
-      visibility: hidden; /* caché avant init */
-      overflow: visible; /* <-- AJOUT ÉLÉMENT CLEF */
-    }
-
-    .flipbook .page {
-      background: #fff;
-      width: 100%;
-      height: 100%;
-    }
-
-    .flipbook img {
-      width: 100%;
-      height: 100%;
-      object-fit: contain;
-    }
   </style>
 </head>
 <body>
-
-  <!-- Son -->
-  <video id="pageSound" preload="auto" style="display: none">
-  <source src="https://i.imgur.com/0twrdNc.mp4" type="video/mp4">
-</video>
 
   <!-- Fond + zones -->
   <div id="container">
@@ -154,17 +135,7 @@
   <div id="popupOverlay">
     <div id="popupContent">
       <span id="closePopup">&times;</span>
-        <div class="flipbook" id="book">
-          <div class="page"></div> <!-- page blanche -->
-          <div class="page"><img src="https://i.imgur.com/uGnH5XI.png"></div>
-          <div class="page"><img src="https://i.imgur.com/javiPf0.png"></div>
-          <div class="page"><img src="https://i.imgur.com/5NDY8VE.png"></div>
-          <div class="page"><img src="https://i.imgur.com/exxUNyF.png"></div>
-          <div class="page"><img src="https://i.imgur.com/QZZqsrk.png"></div>
-          <div class="page"><img src="https://i.imgur.com/6GtLt0X.png"></div>
-          <div class="page"></div> <!-- ✅ dernière page blanche pour parité -->
-        </div>
-
+      <img id="popupImage" src="https://i.imgur.com/javiPf0.png" alt="Image popup">
     </div>
   </div>
 
@@ -173,36 +144,11 @@
     const logoBtn = document.getElementById('logoBtn');
     const popup = document.getElementById('popupOverlay');
     const closeBtn = document.getElementById('closePopup');
-    const sound = document.getElementById('pageSound');
-
-    let bookInitialized = false;
 
     logoBtn.addEventListener('click', () => {
       popup.style.display = 'flex';
       document.body.classList.add('modal-open');
-
-      if (!bookInitialized) {
-        $('#book').turn({
-          width: 400,
-          height: 600,
-          autoCenter: true,
-          display: 'double',
-          elevation: 50,
-          gradients: true,
-          when: {
-            turning: function () {
-             sound.currentTime = 0;
-              sound.play();
-            },
-            turned: function () {
-              document.getElementById('book').style.visibility = 'visible'; // <-- mets-le ici
-            }
-          }
-        });
-        
-        bookInitialized = true;
-      }
-    }); // <-- cette accolade + parenthèse fermante manquait ici
+    });
 
     closeBtn.addEventListener('click', () => {
       popup.style.display = 'none';
