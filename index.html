@@ -280,9 +280,19 @@
     });
 
     window.addEventListener('load', () => {
-      const target = document.getElementById('scrollTarget');
-      if (target) {
-        target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      const container = document.getElementById('container');
+      const image = document.getElementById('mainImage');
+
+      if (container && image.complete) {
+        centerImage();
+      } else {
+        image.addEventListener('load', centerImage);
+      }
+
+      function centerImage() {
+        const imageHeight = image.offsetHeight;
+        const containerHeight = container.clientHeight;
+        container.scrollTop = imageHeight / 2 - containerHeight / 2;
       }
     });
   </script>
