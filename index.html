@@ -292,7 +292,7 @@
         function scrollToImagePercent(percent) {
           const imageHeight = image.offsetHeight;
           const scrollY = imageHeight * percent - container.clientHeight / 2;
-          container.scrollTo({ top: scrollY, behavior: 'smooth' });
+          container.scrollTop = scrolly;
         }
 
         function waitUntilImageLoaded(callback, maxTries = 20) {
