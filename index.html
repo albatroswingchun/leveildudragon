@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>Leveil du Dragon</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, maximum-scale=5.0">
   <style>
@@ -12,6 +12,7 @@
       height: 100vh;
       width: 100vw;
       overflow: hidden;
+      font-family: sans-serif;
     }
 
     body.modal-open {
@@ -66,8 +67,8 @@
       height: 60px;
       border-radius: 50%;
       overflow: hidden;
-      border: 2px solid black; /* ← CONTRENET ET NET ICI */
-      box-shadow: 0 0 10px rgba(255,255,255,0.4); /* ← LUEUR BLANCHE inchangée */
+      box-shadow: 0 0 10px rgba(255,255,255,0.8);
+      border: 2px solid black;
       cursor: pointer;
       animation: pulse 2.4s ease-in-out infinite;
       z-index: 10;
@@ -83,16 +84,24 @@
     }
 
     #secondBtn {
-      bottom: 90px; /* juste au-dessus */
+      bottom: 90px;
       right: 20px;
     }
 
     .fixedBtn img {
       width: 100%;
       height: 100%;
-      transform: scale(1.4);
       object-fit: cover;
+      transform: scale(1.4);
       transition: transform 0.3s ease;
+    }
+
+    #secondBtn img {
+      transform: scale(1.28);
+    }
+
+    #logoBtn img {
+      transform: translateX(-1px) scale(1.4);
     }
 
     .fixedBtn:hover img {
@@ -172,12 +181,65 @@
       width: 100%;
       height: 1px;
     }
+
+    /* Plein écran bouton */
+    #fullscreenBtn {
+      position: fixed;
+      top: 10px;
+      right: 10px;
+      z-index: 20;
+      background: rgba(0, 0, 0, 0.7);
+      border: 2px solid white;
+      padding: 6px 12px;
+      color: white;
+      font-size: 13px;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    /* Overlay portrait */
+    #orientationOverlay {
+      display: none;
+      position: fixed;
+      top: 0; left: 0;
+      width: 100vw; height: 100vh;
+      background-color: rgba(0, 0, 0, 0.9);
+      color: white;
+      z-index: 2000;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 20px;
+    }
+
+    #orientationOverlay span.yellow {
+      color: yellow;
+    }
+
+    @media screen and (orientation: portrait) {
+      #orientationOverlay {
+        display: flex;
+      }
+
+      #container, .fixedBtn, #fullscreenBtn {
+        display: none !important;
+      }
+    }
   </style>
 </head>
+
 <body>
+  <div id="fullscreenBtn">Plein écran</div>
+
+  <div id="orientationOverlay">
+    <p>
+      Pour une immersion optimale et profiter au mieux du jeu, merci de passer en affichage <span class="yellow">paysage</span> et de cliquer ensuite sur le bouton <span class="yellow">Plein écran</span>.
+    </p>
+  </div>
+
   <div id="container">
     <div class="imageWrapper">
-      <img id="mainImage" src="https://i.imgur.com/AG68Kpz.png" alt="Portes du Dragon">
+      <img id="mainImage" src="https://i.imgur.com/AG68Kpz.png" alt="Portes du Dragon" />
       <div id="scrollTarget"></div>
       <a href="#" class="zone porte1"></a>
       <a href="#" class="zone porte2"></a>
@@ -187,17 +249,15 @@
     </div>
   </div>
 
-  <!-- Bouton principal -->
   <div id="logoBtn" class="fixedBtn">
     <img src="https://i.imgur.com/uGnH5XI.png" alt="Logo Albatros">
   </div>
 
-  <!-- Second bouton juste au-dessus -->
   <div id="secondBtn" class="fixedBtn">
     <img src="https://i.imgur.com/ayNer7u.png" alt="Règles">
   </div>
 
-  <!-- Premier popup -->
+  <!-- Popup 1 -->
   <div id="popup1" class="popupOverlay">
     <div class="popupContent">
       <span class="closePopup">&times;</span>
@@ -207,7 +267,7 @@
     </div>
   </div>
 
-  <!-- Deuxième popup -->
+  <!-- Popup 2 -->
   <div id="popup2" class="popupOverlay">
     <div class="popupContent">
       <span class="closePopup">&times;</span>
@@ -270,14 +330,14 @@
       });
     }
 
-    // === Première galerie : logo principal
+    // Logo 1
     initPopup("logoBtn", "popup1", [
       "https://i.imgur.com/uGnH5XI.png",
       "https://i.imgur.com/javiPf0.png",
       "https://i.imgur.com/5NDY8VE.png"
     ]);
 
-    // === Deuxième galerie : second bouton (règles, etc.)
+    // Logo 2
     initPopup("secondBtn", "popup2", [
       "https://i.imgur.com/ayNer7u.png",
       "https://i.imgur.com/aLNoNg3.png",
@@ -286,7 +346,7 @@
       "https://i.imgur.com/ZVGY4HX.png"
     ]);
 
-    // === Scroll auto sur 63% au chargement ===
+    // Scroll vers 63%
     window.addEventListener('DOMContentLoaded', () => {
       const container = document.getElementById('container');
       const image = document.getElementById('mainImage');
@@ -305,6 +365,18 @@
         tryScroll();
       } else {
         image.addEventListener('load', () => tryScroll());
+      }
+    });
+
+    // Plein écran
+    const fullscreenBtn = document.getElementById('fullscreenBtn');
+    fullscreenBtn.addEventListener('click', () => {
+      if (!document.fullscreenElement) {
+        document.documentElement.requestFullscreen().catch(err => {
+          alert(`Erreur de passage en plein écran : ${err.message}`);
+        });
+      } else {
+        document.exitFullscreen();
       }
     });
   </script>
