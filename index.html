@@ -198,11 +198,6 @@
     }
 
     .container-orientation {
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
       display: none;
       background-color: rgba(0, 0, 0, 0.9);
       justify-content: center;
@@ -228,7 +223,7 @@
         display: flex;
       }
 
-      .landscape, #container, .fixedBtn, #fullscreenBtn {
+      #container, .fixedBtn, #fullscreenBtn {
         display: none !important;
       }
     }
@@ -244,18 +239,17 @@
     </p>
   </div>
 
-  <div class="landscape">
-    <div id="container">
-      <div class="imageWrapper">
-        <img id="mainImage" src="https://i.imgur.com/AG68Kpz.png" alt="Portes du Dragon" />
-        <div id="scrollTarget"></div>
-        <a href="#" class="zone porte1"></a>
-        <a href="#" class="zone porte2"></a>
-        <a href="#" class="zone porte3"></a>
-        <a href="#" class="zone porte4"></a>
-        <a href="#" class="zone porte5"></a>
-      </div>
+  <div id="container">
+    <div class="imageWrapper">
+      <img id="mainImage" src="https://i.imgur.com/AG68Kpz.png" alt="Portes du Dragon" />
+      <div id="scrollTarget"></div>
+      <a href="#" class="zone porte1"></a>
+      <a href="#" class="zone porte2"></a>
+      <a href="#" class="zone porte3"></a>
+      <a href="#" class="zone porte4"></a>
+      <a href="#" class="zone porte5"></a>
     </div>
+  </div>
 
   <div id="logoBtn" class="fixedBtn">
     <img src="https://i.imgur.com/uGnH5XI.png" alt="Logo Albatros">
@@ -283,7 +277,6 @@
       <img class="popupImage" src="" alt="">
       <div class="arrow right">&#8594;</div>
     </div>
-  </div>
   </div>
   
   <script>
