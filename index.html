@@ -198,16 +198,17 @@
     }
 
     .container-orientation {
+      display: none;
+      background-color: rgba(0, 0, 0, 0.9);
       justify-content: center;
       align-items: center;
-      display: flex;
-      height: 100vh;
+      height: 100%;
+      width: 100%;
+      max-width: 300px;
     }
 
     /* Overlay portrait */
     #orientationOverlay {
-      display: none;
-      background-color: rgba(0, 0, 0, 0.9);
       color: white;
       text-align: center;
       padding: 20px;
@@ -219,7 +220,7 @@
 
     @media screen and (orientation: portrait) {
       #orientationOverlay {
-        display: block;
+        display: flex;
       }
 
       #container, .fixedBtn, #fullscreenBtn {
