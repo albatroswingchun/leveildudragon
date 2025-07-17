@@ -228,7 +228,7 @@
         display: flex;
       }
 
-      #container, .fixedBtn, #fullscreenBtn {
+      .landscape, #container, .fixedBtn, #fullscreenBtn {
         display: none !important;
       }
     }
@@ -243,18 +243,19 @@
         Pour une immersion optimale et profiter au mieux du jeu, merci de passer en affichage <span class="yellow">paysage</span> et de cliquer ensuite sur le bouton <span class="yellow">Plein écran</span>.
     </p>
   </div>
-  
-  <div id="container">
-    <div class="imageWrapper">
-      <img id="mainImage" src="https://i.imgur.com/AG68Kpz.png" alt="Portes du Dragon" />
-      <div id="scrollTarget"></div>
-      <a href="#" class="zone porte1"></a>
-      <a href="#" class="zone porte2"></a>
-      <a href="#" class="zone porte3"></a>
-      <a href="#" class="zone porte4"></a>
-      <a href="#" class="zone porte5"></a>
+
+  <div class="landscape">
+    <div id="container">
+      <div class="imageWrapper">
+        <img id="mainImage" src="https://i.imgur.com/AG68Kpz.png" alt="Portes du Dragon" />
+        <div id="scrollTarget"></div>
+        <a href="#" class="zone porte1"></a>
+        <a href="#" class="zone porte2"></a>
+        <a href="#" class="zone porte3"></a>
+        <a href="#" class="zone porte4"></a>
+        <a href="#" class="zone porte5"></a>
+      </div>
     </div>
-  </div>
 
   <div id="logoBtn" class="fixedBtn">
     <img src="https://i.imgur.com/uGnH5XI.png" alt="Logo Albatros">
@@ -283,7 +284,8 @@
       <div class="arrow right">&#8594;</div>
     </div>
   </div>
-
+  </div>
+  
   <script>
     function initPopup(buttonId, popupId, images) {
       const btn = document.getElementById(buttonId);
