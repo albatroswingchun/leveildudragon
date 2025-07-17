@@ -197,6 +197,12 @@
       cursor: pointer;
     }
 
+    .container-orientation {
+      justify-content: center;
+      align-items: center;
+      display: flex;
+    }
+
     /* Overlay portrait */
     #orientationOverlay {
       display: none;
@@ -206,8 +212,6 @@
       background-color: rgba(0, 0, 0, 0.9);
       color: white;
       z-index: 2000;
-      justify-content: center;
-      align-items: center;
       text-align: center;
       padding: 20px;
     }
@@ -218,7 +222,7 @@
 
     @media screen and (orientation: portrait) {
       #orientationOverlay {
-        display: flex;
+        display: block;
       }
 
       #container, .fixedBtn, #fullscreenBtn {
@@ -231,8 +235,10 @@
 <body>
   <div id="fullscreenBtn">Plein écran</div>
   
-  <div id="orientationOverlay">
-      Pour une immersion optimale et profiter au mieux du jeu, merci de passer en affichage <span class="yellow">paysage</span> et de cliquer ensuite sur le bouton <span class="yellow">Plein écran</span>.
+  <div class="container-orientation">
+    <p id="orientationOverlay">
+        Pour une immersion optimale et profiter au mieux du jeu, merci de passer en affichage <span class="yellow">paysage</span> et de cliquer ensuite sur le bouton <span class="yellow">Plein écran</span>.
+    </p>
   </div>
   
   <div id="container">
