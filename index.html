@@ -5,318 +5,367 @@
   <title>Leveil du Dragon</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, maximum-scale=5.0">
   <style>
-    html, body {
-      margin: 0;
-      padding: 0;
-      background: #000;
-      height: 100vh;
-      width: 100vw;
-      overflow: hidden;
-      font-family: sans-serif;
-    }
-
-    body.modal-open {
-      overflow: hidden;
-    }
-
-    @keyframes pulse {
-      0% { transform: scale(1); box-shadow: 0 0 10px rgba(255,255,255,0.4); }
-      50% { transform: scale(1.1); box-shadow: 0 0 20px rgba(255,255,255,0.8); }
-      100% { transform: scale(1); box-shadow: 0 0 10px rgba(255,255,255,0.4); }
-    }
-
-    #container {
-      overflow-y: auto;
-      overflow-x: hidden;
-      height: 100vh;
-      width: 100vw;
-      position: relative;
-    }
-
-    .imageWrapper {
-      position: relative;
-      width: 100%;
-    }
-
-    .imageWrapper img {
-      width: 100%;
-      display: block;
-    }
-
-    .zone {
-      position: absolute;
-      background-color: transparent;
-      cursor: pointer;
-      z-index: 2;
-    }
-
-    .zone:hover {
-      box-shadow: 0 0 20px 10px rgba(255, 255, 0, 0.4);
-      border-radius: 8px;
-    }
-
-    .porte1 { top: 40%; left: 9%; width: 20%; height: 33%; }
-    .porte2 { top: 48%; left: 41%; width: 13.5%; height: 25%; }
-    .porte3 { top: 54%; left: 60%; width: 10%; height: 19%; }
-    .porte4 { top: 57.5%; left: 73.5%; width: 8.5%; height: 16%; }
-    .porte5 { top: 60%; left: 84.5%; width: 8%; height: 14%; }
-
-    .fixedBtn {
-      position: fixed;
-      width: 60px;
-      height: 60px;
-      border-radius: 50%;
-      overflow: hidden;
-      box-shadow: 0 0 10px rgba(255,255,255,0.8);
-      border: 2px solid black;
-      cursor: pointer;
-      animation: pulse 2.4s ease-in-out infinite;
-      z-index: 10;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      background: black;
-    }
-
-    #logoBtn {
-      bottom: 20px;
-      right: 20px;
-    }
-
-    #secondBtn {
-      bottom: 90px;
-      right: 20px;
-    }
-
-    .fixedBtn img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      transform: scale(1.4);
-      transition: transform 0.3s ease;
-    }
-
-    #secondBtn img {
-      transform: scale(1.28);
-    }
-
-    #logoBtn img {
-      transform: translateX(-1px) scale(1.4);
-    }
-
-    .fixedBtn:hover img {
-      transform: scale(1.5);
-    }
-
-    .popupOverlay {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      background: rgba(0, 0, 0, 0.8);
-      display: none;
-      justify-content: center;
-      align-items: center;
-      z-index: 999;
-    }
-
-    .popupContent {
-      width: 90%;
-      max-width: 500px;
-      background: none;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      position: relative;
-    }
-
-    .popupImage {
-      max-width: 100%;
-      max-height: 90vh;
-      border-radius: 12px;
-      box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
-    }
-
-    .closePopup {
-      position: absolute;
-      top: 10px;
-      right: 15px;
-      width: 28px;
-      height: 28px;
-      background: rgba(50, 50, 50, 0.3);
-      font-size: 42px;
-      color: white;
-      border-radius: 50%;
-      padding: 8px;
-      cursor: pointer;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      z-index: 1000;
-    }
-
-    .arrow {
-      position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
-      width: 28px;
-      height: 28px;
-      font-size: 23px;
-      color: white;
-      background: rgba(128, 128, 128, 0.3);
-      padding: 8px;
-      border-radius: 50%;
-      cursor: pointer;
-      z-index: 1000;
-    }
-
-    .arrow.left { left: 5px; }
-    .arrow.right { right: 4px; }
-
-    #scrollTarget {
-      position: absolute;
-      top: 63%;
-      left: 0;
-      width: 100%;
-      height: 1px;
-    }
-
-    /* Plein écran bouton */
-    #fullscreenBtn {
-      position: fixed;
-      top: 10px;
-      right: 10px;
-      z-index: 20;
-      background: rgba(0, 0, 0, 0.7);
-      border: 2px solid white;
-      padding: 6px 12px;
-      color: white;
-      font-size: 13px;
-      border-radius: 8px;
-      cursor: pointer;
-    }
-
-    .container-orientation {
-      display: none;
-      background-color: rgba(0, 0, 0, 0.9);
-      justify-content: center;
-      align-items: center;
-      height: 100%;
-      width: 100%;
-      max-width: 300px;
-    }
-
-    /* Overlay portrait */
-    #orientationOverlay {
-      color: white;
-      text-align: center;
-      padding: 20px;
-      max-width: 90%;
-    }
-
-    #orientationOverlay span.yellow {
-      color: yellow;
-    }
-
-    @media screen and (orientation: portrait) {
-      .container-orientation {
-        display: flex;
+      html, body {
+          margin: 0;
+          padding: 0;
+          background: #000;
+          height: 100vh;
+          width: 100vw;
+          overflow: hidden;
+          font-family: sans-serif;
       }
 
-      #container, .fixedBtn, #fullscreenBtn {
-        display: none !important;
+      body.modal-open {
+          overflow: hidden;
       }
-    }
+
+      @keyframes pulse {
+          0% {
+              transform: scale(1);
+              box-shadow: 0 0 10px rgba(255, 255, 255, 0.4);
+          }
+          50% {
+              transform: scale(1.1);
+              box-shadow: 0 0 20px rgba(255, 255, 255, 0.8);
+          }
+          100% {
+              transform: scale(1);
+              box-shadow: 0 0 10px rgba(255, 255, 255, 0.4);
+          }
+      }
+
+      #container {
+          overflow-y: auto;
+          overflow-x: hidden;
+          height: 100vh;
+          width: 100vw;
+          position: relative;
+      }
+
+      .imageWrapper {
+          position: relative;
+          width: 100%;
+      }
+
+      .imageWrapper img {
+          width: 100%;
+          display: block;
+      }
+
+      .zone {
+          position: absolute;
+          background-color: transparent;
+          cursor: pointer;
+          z-index: 2;
+      }
+
+      .zone:hover {
+          box-shadow: 0 0 20px 10px rgba(255, 255, 0, 0.4);
+          border-radius: 8px;
+      }
+
+      .porte1 {
+          top: 40%;
+          left: 9%;
+          width: 20%;
+          height: 33%;
+      }
+
+      .porte2 {
+          top: 48%;
+          left: 41%;
+          width: 13.5%;
+          height: 25%;
+      }
+
+      .porte3 {
+          top: 54%;
+          left: 60%;
+          width: 10%;
+          height: 19%;
+      }
+
+      .porte4 {
+          top: 57.5%;
+          left: 73.5%;
+          width: 8.5%;
+          height: 16%;
+      }
+
+      .porte5 {
+          top: 60%;
+          left: 84.5%;
+          width: 8%;
+          height: 14%;
+      }
+
+      .fixedBtn {
+          position: fixed;
+          width: 60px;
+          height: 60px;
+          border-radius: 50%;
+          overflow: hidden;
+          box-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+          border: 2px solid black;
+          cursor: pointer;
+          animation: pulse 2.4s ease-in-out infinite;
+          z-index: 10;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          background: black;
+      }
+
+      #logoBtn {
+          bottom: 20px;
+          right: 20px;
+      }
+
+      #secondBtn {
+          bottom: 90px;
+          right: 20px;
+      }
+
+      .fixedBtn img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          transform: scale(1.4);
+          transition: transform 0.3s ease;
+      }
+
+      #secondBtn img {
+          transform: scale(1.28);
+      }
+
+      #logoBtn img {
+          transform: translateX(-1px) scale(1.4);
+      }
+
+      .fixedBtn:hover img {
+          transform: scale(1.5);
+      }
+
+      .popupOverlay {
+          position: fixed;
+          top: 0;
+          left: 0;
+          width: 100vw;
+          height: 100vh;
+          background: rgba(0, 0, 0, 0.8);
+          display: none;
+          justify-content: center;
+          align-items: center;
+          z-index: 999;
+      }
+
+      .popupContent {
+          width: 90%;
+          max-width: 500px;
+          background: none;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          position: relative;
+      }
+
+      .popupImage {
+          max-width: 100%;
+          max-height: 90vh;
+          border-radius: 12px;
+          box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+      }
+
+      .closePopup {
+          position: absolute;
+          top: 10px;
+          right: 15px;
+          width: 28px;
+          height: 28px;
+          background: rgba(50, 50, 50, 0.3);
+          font-size: 42px;
+          color: white;
+          border-radius: 50%;
+          padding: 8px;
+          cursor: pointer;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          z-index: 1000;
+      }
+
+      .arrow {
+          position: absolute;
+          top: 50%;
+          transform: translateY(-50%);
+          width: 28px;
+          height: 28px;
+          font-size: 23px;
+          color: white;
+          background: rgba(128, 128, 128, 0.3);
+          padding: 8px;
+          border-radius: 50%;
+          cursor: pointer;
+          z-index: 1000;
+      }
+
+      .arrow.left {
+          left: 5px;
+      }
+
+      .arrow.right {
+          right: 4px;
+      }
+
+      #scrollTarget {
+          position: absolute;
+          top: 63%;
+          left: 0;
+          width: 100%;
+          height: 1px;
+      }
+
+      /* Plein écran bouton */
+      #fullscreenBtn {
+          position: fixed;
+          top: 10px;
+          right: 10px;
+          z-index: 20;
+          background: rgba(0, 0, 0, 0.7);
+          border: 2px solid white;
+          padding: 6px 12px;
+          color: white;
+          font-size: 13px;
+          border-radius: 8px;
+          cursor: pointer;
+      }
+
+      .container-portrait {
+          display: none;
+          height: 100%;
+          background: rgba(0, 0, 0, 0.9);
+          padding: 20px;
+          justify-content: center;
+          align-items: center;
+      }
+
+      .orientation-content {
+          max-width: 350px;
+          text-align: center;
+          line-height: 19px;
+          color: white;
+      }
+
+      .orientation-content span.yellow {
+          color: yellow;
+          font-weight: bold;
+      }
+
+      @media screen and (orientation: portrait) {
+          .container-portrait {
+              display: flex;
+          }
+
+          .container-landscape {
+              display: none;
+          }
+      }
   </style>
 </head>
 
 <body>
-  <div id="fullscreenBtn">Plein écran</div>
-  
-  <div class="container-orientation">
-    <div id="orientationOverlay">
-        Pour une immersion optimale et profiter au mieux du jeu, merci de passer en affichage <span class="yellow">paysage</span> et de cliquer ensuite sur le bouton <span class="yellow">Plein écran</span>.
+  <div class="container-portrait">
+    <div class="orientation-content">
+      <p>
+        Pour une immersion optimale et profiter au mieux du jeu, merci de
+        passer en affichage <span class="yellow">paysage</span> et de cliquer
+        ensuite sur le bouton <span class="yellow">Plein&nbsp;écran</span>.
+      </p>
     </div>
   </div>
 
-  <div id="container">
-    <div class="imageWrapper">
-      <img id="mainImage" src="https://i.imgur.com/AG68Kpz.png" alt="Portes du Dragon" />
-      <div id="scrollTarget"></div>
-      <a href="#" class="zone porte1"></a>
-      <a href="#" class="zone porte2"></a>
-      <a href="#" class="zone porte3"></a>
-      <a href="#" class="zone porte4"></a>
-      <a href="#" class="zone porte5"></a>
+  <div class="container-landscape">
+    <div id="fullscreenBtn">Plein écran</div>
+
+    <div id="container">
+      <div class="imageWrapper">
+        <img id="mainImage" src="https://i.imgur.com/AG68Kpz.png" alt="Portes du Dragon" />
+        <div id="scrollTarget"></div>
+        <a href="#" class="zone porte1"></a>
+        <a href="#" class="zone porte2"></a>
+        <a href="#" class="zone porte3"></a>
+        <a href="#" class="zone porte4"></a>
+        <a href="#" class="zone porte5"></a>
+      </div>
+    </div>
+
+    <div id="logoBtn" class="fixedBtn">
+      <img src="https://i.imgur.com/uGnH5XI.png" alt="Logo Albatros">
+    </div>
+
+    <div id="secondBtn" class="fixedBtn">
+      <img src="https://i.imgur.com/ayNer7u.png" alt="Règles">
+    </div>
+
+    <!-- Popup 1 -->
+    <div id="popup1" class="popupOverlay">
+      <div class="popupContent">
+        <span class="closePopup">&times;</span>
+        <div class="arrow left">&#8592;</div>
+        <img class="popupImage" src="" alt="">
+        <div class="arrow right">&#8594;</div>
+      </div>
+    </div>
+
+    <!-- Popup 2 -->
+    <div id="popup2" class="popupOverlay">
+      <div class="popupContent">
+        <span class="closePopup">&times;</span>
+        <div class="arrow left">&#8592;</div>
+        <img class="popupImage" src="" alt="">
+        <div class="arrow right">&#8594;</div>
+      </div>
     </div>
   </div>
 
-  <div id="logoBtn" class="fixedBtn">
-    <img src="https://i.imgur.com/uGnH5XI.png" alt="Logo Albatros">
-  </div>
-
-  <div id="secondBtn" class="fixedBtn">
-    <img src="https://i.imgur.com/ayNer7u.png" alt="Règles">
-  </div>
-
-  <!-- Popup 1 -->
-  <div id="popup1" class="popupOverlay">
-    <div class="popupContent">
-      <span class="closePopup">&times;</span>
-      <div class="arrow left">&#8592;</div>
-      <img class="popupImage" src="" alt="">
-      <div class="arrow right">&#8594;</div>
-    </div>
-  </div>
-
-  <!-- Popup 2 -->
-  <div id="popup2" class="popupOverlay">
-    <div class="popupContent">
-      <span class="closePopup">&times;</span>
-      <div class="arrow left">&#8592;</div>
-      <img class="popupImage" src="" alt="">
-      <div class="arrow right">&#8594;</div>
-    </div>
-  </div>
-  
   <script>
-    function initPopup(buttonId, popupId, images) {
+    function initPopup (buttonId, popupId, images) {
+
       const btn = document.getElementById(buttonId);
       const popup = document.getElementById(popupId);
-      const img = popup.querySelector(".popupImage");
-      const left = popup.querySelector(".arrow.left");
-      const right = popup.querySelector(".arrow.right");
-      const close = popup.querySelector(".closePopup");
+      const img = popup.querySelector('.popupImage');
+      const left = popup.querySelector('.arrow.left');
+      const right = popup.querySelector('.arrow.right');
+      const close = popup.querySelector('.closePopup');
 
       let index = 0;
 
-      function updateImage() {
+      function updateImage () {
         img.src = images[index];
         left.style.display = index === 0 ? 'none' : 'block';
         right.style.display = index === images.length - 1 ? 'none' : 'block';
       }
 
-      btn.addEventListener("click", () => {
-        popup.style.display = "flex";
-        document.body.classList.add("modal-open");
+      btn.addEventListener('click', () => {
+        popup.style.display = 'flex';
+        document.body.classList.add('modal-open');
         index = 0;
         updateImage();
       });
 
-      close.addEventListener("click", () => {
-        popup.style.display = "none";
-        document.body.classList.remove("modal-open");
+      close.addEventListener('click', () => {
+        popup.style.display = 'none';
+        document.body.classList.remove('modal-open');
       });
 
-      popup.addEventListener("click", (e) => {
+      popup.addEventListener('click', (e) => {
         if (e.target === popup) {
-          popup.style.display = "none";
-          document.body.classList.remove("modal-open");
+          popup.style.display = 'none';
+          document.body.classList.remove('modal-open');
         }
       });
 
-      left.addEventListener("click", (e) => {
+      left.addEventListener('click', (e) => {
         e.stopPropagation();
         if (index > 0) {
           index--;
@@ -324,7 +373,7 @@
         }
       });
 
-      right.addEventListener("click", (e) => {
+      right.addEventListener('click', (e) => {
         e.stopPropagation();
         if (index < images.length - 1) {
           index++;
@@ -334,19 +383,19 @@
     }
 
     // Logo 1
-    initPopup("logoBtn", "popup1", [
-      "https://i.imgur.com/uGnH5XI.png",
-      "https://i.imgur.com/javiPf0.png",
-      "https://i.imgur.com/5NDY8VE.png"
+    initPopup('logoBtn', 'popup1', [
+      'https://i.imgur.com/uGnH5XI.png',
+      'https://i.imgur.com/javiPf0.png',
+      'https://i.imgur.com/5NDY8VE.png'
     ]);
 
     // Logo 2
-    initPopup("secondBtn", "popup2", [
-      "https://i.imgur.com/ayNer7u.png",
-      "https://i.imgur.com/aLNoNg3.png",
-      "https://i.imgur.com/br5f9WL.png",
-      "https://i.imgur.com/78d9HDe.png",
-      "https://i.imgur.com/ZVGY4HX.png"
+    initPopup('secondBtn', 'popup2', [
+      'https://i.imgur.com/ayNer7u.png',
+      'https://i.imgur.com/aLNoNg3.png',
+      'https://i.imgur.com/br5f9WL.png',
+      'https://i.imgur.com/78d9HDe.png',
+      'https://i.imgur.com/ZVGY4HX.png'
     ]);
 
     // Scroll vers 63%
